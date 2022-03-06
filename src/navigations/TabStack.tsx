@@ -1,0 +1,106 @@
+import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  MainStackNavigator,
+  TaskStackScreen,
+  //VideoStackScreen,
+  //NewsStackScreen,
+} from './MainStack';
+import {useTheme, Icon} from 'react-native-elements';
+import {colors as globalColors} from '../common/styles';
+
+const Tab = createBottomTabNavigator();
+
+const screenOptionStyle = {
+  headerStyle: {
+    backgroundColor: '#9AC4F8',
+  },
+  headerTintColor: 'white',
+  headerBackTitle: 'Back',
+  headerShown: false,
+};
+
+type tabBarProps = {
+  name?: string;
+  size: number | string | any;
+  color: string;
+};
+
+const TabStack = () => {
+  const {theme} = useTheme();
+  const {colors} = theme;
+  return (
+    <Tab.Navigator
+      screenOptions={screenOptionStyle}
+      backBehavior="history"
+      initialRouteName={'Home'}
+      tabBarOptions={{
+        showLabel: false,
+        keyboardHidesTabBar: true,
+        activeTintColor: colors?.white,
+        inactiveTintColor: colors?.warning,
+        style: {backgroundColor: globalColors.background, minHeight: 55},
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={MainStackNavigator}
+        options={{
+          tabBarIcon: ({color, size}: tabBarProps) => (
+            <Icon
+              name="dashboard"
+              size={size}
+              color={color}
+              tvParallaxProperties={undefined}
+            />
+          ),
+        }}
+      />
+      {/*
+      ongoing update
+      <Tab.Screen
+        name="News"
+        component={NewsStackScreen}
+        options={{
+          tabBarIcon: ({color, size}: tabBarProps) => (
+            <Icon
+              name="add-to-photos"
+              size={size}
+              color={color}
+              tvParallaxProperties={undefined}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Videos"
+        component={VideoStackScreen}
+        options={{
+          tabBarIcon: ({color, size}: tabBarProps) => (
+            <Icon
+              name="video-collection"
+              size={size}
+              color={color}
+              tvParallaxProperties={undefined}
+            />
+          ),
+        }}
+      />*/}
+      <Tab.Screen
+        name="Tasks"
+        component={TaskStackScreen}
+        options={{
+          tabBarIcon: ({color, size}: tabBarProps) => (
+            <Icon
+              name="add-task"
+              size={size}
+              color={color}
+              tvParallaxProperties={undefined}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+export default TabStack;
