@@ -8,6 +8,7 @@ import RegistrationScreen from '../screens/RegistrationScreen';
 import TasksScreen from '../screens/TasksScreen';
 import VideoScreen from '../screens/VideosScreen';
 import NewsScreen from '../screens/NewsScreen';
+import NewDetailsScreen from '../screens/NewsScreen/NewsDetailScreen';
 
 import {DefaultTheme} from '../common/styles';
 
@@ -74,6 +75,7 @@ const NewsStackScreen = () => {
   return (
     <NewsStack.Navigator screenOptions={stackOptionStyle}>
       <NewsStack.Screen name="News" component={NewsScreen} />
+      <NewsStack.Screen name="NewsDetails" component={NewDetailsScreen} />
       {/**
        * news list
        * news item

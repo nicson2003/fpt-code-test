@@ -4,7 +4,7 @@ import {
   MainStackNavigator,
   TaskStackScreen,
   //VideoStackScreen,
-  //NewsStackScreen,
+  NewsStackScreen,
 } from './MainStack';
 import {useTheme, Icon} from 'react-native-elements';
 import {colors as globalColors} from '../common/styles';
@@ -55,8 +55,6 @@ const TabStack = () => {
           ),
         }}
       />
-      {/*
-      ongoing update
       <Tab.Screen
         name="News"
         component={NewsStackScreen}
@@ -71,6 +69,8 @@ const TabStack = () => {
           ),
         }}
       />
+      {/*      ongoing update
+
       <Tab.Screen
         name="Videos"
         component={VideoStackScreen}

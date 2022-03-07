@@ -5,7 +5,6 @@ import api from '../common/services/api';
 type authInput = {
   password: string;
   email: string;
-
 };
 
 const defaultState = {
