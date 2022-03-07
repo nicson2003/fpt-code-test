@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, ImageBackground, StatusBar} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {login} from '../../store/auth';
+//import {login} from '../../store/auth';
 import {
   Input,
   Button,
@@ -13,31 +13,38 @@ import {
 import {loginBackground} from '../../assets';
 import {useStyle} from './styles';
 import {isBlank} from '../../common/services/utils';
+//import {useLogin} from './login.hooks';
+import {postAuth} from '../../store/auth';
 
 const LoginScreen = (props: any) => {
   const dispatch = useDispatch();
   const {theme} = useTheme();
-
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  //const {doLogin} = useLogin();
+  const [email, setEmail] = useState('eve.holt@reqres.in');
+  const [password, setPassword] = useState('cityslicka');
   const [enableLoginButton, setEnableLoginButton] = useState(false);
   const styles = useStyle(theme);
 
   useEffect(() => {
-    if (!isBlank(userName) && !isBlank(password)) {
+    if (!isBlank(email) && !isBlank(password)) {
       setEnableLoginButton(true);
     } else {
       setEnableLoginButton(false);
     }
-  }, [userName, password]);
+
+    return function cleanup() {
+      setEnableLoginButton(false);
+    };
+  }, [email, password]);
 
   const onLogin = () => {
     if (enableLoginButton) {
       const userInput = {
-        username: userName,
+        email,
         password,
       };
-      dispatch(login(userInput));
+      ///doLogin(userInput);
+      dispatch(postAuth(userInput));
     }
   };
 
@@ -70,7 +77,7 @@ const LoginScreen = (props: any) => {
               tvParallaxProperties={undefined}
             />
           }
-          onChangeText={value => setUserName(value)}
+          onChangeText={value => setEmail(value)}
           autoCompleteType={undefined}
         />
         <Input

@@ -14,7 +14,7 @@ interface TaskData {
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
   const response = await fetch(
-    'https://jsonplaceholder.typicode.com/todos?delay=1',
+    'https://jsonplaceholder.typicode.com/todos/?userId=10',
   );
   return (await response.json()) as TaskData[];
 });

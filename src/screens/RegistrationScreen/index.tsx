@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, ImageBackground, StatusBar} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {register} from '../../store/auth';
+import {postRegister} from '../../store/auth';
 import {
   Input,
   Button,
@@ -20,26 +20,26 @@ const RegistrationScreen = (props: any) => {
 
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [emailID, setEmailID] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [enableRegisterButton, setEnableRegisterButton] = useState(false);
   const styles = useStyle(theme);
 
   useEffect(() => {
-    if (!isBlank(userName) && !isBlank(password) && !isBlank(emailID)) {
+    if (!isBlank(userName) && !isBlank(password) && !isBlank(email)) {
       setEnableRegisterButton(true);
     } else {
       setEnableRegisterButton(false);
     }
-  }, [userName, password, emailID]);
+  }, [userName, password, email]);
 
   const onRegister = () => {
     if (enableRegisterButton) {
       const userInput = {
         username: userName,
-        emailaddress: emailID,
+        email: email,
         password,
       };
-      dispatch(register(userInput));
+      dispatch(postRegister(userInput));
     }
   };
 
@@ -85,7 +85,7 @@ const RegistrationScreen = (props: any) => {
               tvParallaxProperties={undefined}
             />
           }
-          onChangeText={value => setEmailID(value)}
+          onChangeText={value => setEmail(value)}
           autoCompleteType={undefined}
         />
         <Input

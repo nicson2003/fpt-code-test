@@ -10,14 +10,14 @@ import {isBlank} from '../../common/services/utils';
 import SplashScreen from '../../common/components/SplashScreen';
 
 const RootScreen = () => {
-  const {token} = useSelector((state: RootState) => state.auth);
+  const {token, loading} = useSelector((state: RootState) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-  }, []);
+  }, [token, loading]);
 
   if (isLoading) {
     return <SplashScreen />;
