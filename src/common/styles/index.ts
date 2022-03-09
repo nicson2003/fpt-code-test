@@ -39,7 +39,7 @@ export const DefaultTheme: ThemeProps = {
   colors: {
     ...InitDefaultTheme.colors,
     text: '#000',
-  background: '#3D851A',
+    background: '#3D851A',
     headerColor: '#000',
     primary: '#5dc6b7',
     secondary: '#bbbbbb',
@@ -60,7 +60,7 @@ export const DarkTheme: ThemeProps = {
     ...InitDarkTheme.colors,
     text: '#fff',
     headerColor: '#000',
-  background: '#3D851A',
+    background: '#3D851A',
     primary: '#5dc6b7',
     secondary: '#bbbbbb',
     backgroundSecondary: '#1f1f1f',

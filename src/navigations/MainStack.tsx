@@ -76,11 +76,6 @@ const NewsStackScreen = () => {
     <NewsStack.Navigator screenOptions={stackOptionStyle}>
       <NewsStack.Screen name="News" component={NewsScreen} />
       <NewsStack.Screen name="NewsDetails" component={NewDetailsScreen} />
-      {/**
-       * news list
-       * news item
-       * news details
-       */}
     </NewsStack.Navigator>
   );
 };

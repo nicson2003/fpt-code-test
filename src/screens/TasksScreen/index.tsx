@@ -21,7 +21,7 @@ const TasksScreen = (props: any) => {
   const [newTask, setNewTask] = useState<string>('');
 
   useEffect(() => {
-    dispatch(fetchTasks());
+    //dispatch(fetchTasks());
   }, []);
 
   if (loading) {

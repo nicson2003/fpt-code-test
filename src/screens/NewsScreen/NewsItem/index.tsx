@@ -1,22 +1,33 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Pressable} from 'react-native';
 import {Text} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 import {colors} from '../../../common/styles';
+import moment from 'moment';
 
 const NewsItem = (props: any) => {
-  const {title, urlToImage} = props?.item;
+  const navigation = useNavigation();
+  const {title, urlToImage, sourceName, publishedAt} = props?.item;
+  const relativeTime = moment(publishedAt).fromNow();
+
   return (
-    <View style={styles.todoItem}>
+    <View style={styles.newsItem}>
       <View style={styles.leftContainer}>
-        <Image
-          style={styles.image}
-          resizeMode="cover"
-          source={{uri: urlToImage}}
-        />
-      </View>
-      <View style={styles.rightContainer}>
+        {sourceName && <Text style={styles.newsSource}>{sourceName}</Text>}
         <Text style={styles.newsTitle}>{title}</Text>
+        <Text style={styles.newsPublished}>{relativeTime}</Text>
       </View>
+      {urlToImage && (
+        <View style={styles.rightContainer}>
+          <Pressable onPress={() => navigation.navigate('NewsDetails')}>
+            <Image
+              style={styles.image}
+              resizeMode="cover"
+              source={{uri: urlToImage}}
+            />
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
@@ -49,22 +60,36 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
-  newsTitle: {color: 'white', fontWeight: 'bold', fontSize: 14},
+  newsSource: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  newsTitle: {color: 'white', fontWeight: 'bold', fontSize: 12},
+  newsPublished: {
+    color: 'silver',
+    fontWeight: 'bold',
+    fontSize: 12,
+    bottom: 0,
+    position: 'absolute',
+  },
+
   taskTitleContainer: {
     flex: 5,
   },
-  todoItem: {
+  newsItem: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     top: 10,
     marginBottom: 10,
     backgroundColor: colors.background,
-    padding: 20,
+    padding: 15,
     borderRadius: 15,
     borderWidth: 1,
     borderColor: colors.background,
-    minHeight: 100,
+    minHeight: 130,
     shadowColor: colors.text,
     shadowOffset: {
       width: 0,
@@ -72,13 +97,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
-
     elevation: 4,
   },
   image: {
     width: 100,
     height: 100,
   },
-  leftContainer: {flex: 2, marginRight: 0},
-  rightContainer: {flex: 4, margin: 0},
+  leftContainer: {flex: 4, marginRight: 2},
+  rightContainer: {flex: 2, margin: 0},
 });
