@@ -13,6 +13,7 @@ const StatusBar = () => {
     <View style={styles.statusBarStyle}>
       <RNStatusBar
         backgroundColor={styles.statusBarStyle.backgroundColor}
+        translucent={true}
         barStyle="light-content"
       />
     </View>

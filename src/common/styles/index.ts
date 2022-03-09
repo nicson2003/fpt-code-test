@@ -6,11 +6,12 @@ import {
 
 export const colors = {
   background: '#3D851A',
-  backgroundLight: '#fff',
+  backgroundLight: '#FBFEFE',
   orange: '#FF4500',
   text: '#fff',
   goldColor: '#fbb825',
 };
+//#F98E05, #CED2D1, #679D3D, #FBFEFE, #192328, #166842
 
 export const layout = {
   paddingHorizontal: 20,
