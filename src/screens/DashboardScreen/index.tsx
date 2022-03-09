@@ -1,6 +1,11 @@
-import React, {Fragment} from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import StatusBar from '../../common/components/StatusBar';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+  StatusBar,
+} from 'react-native';
+import CustomStatusBar from '../../common/components/StatusBar';
 import {defaultProps} from '../../common/types';
 import {Header, Icon, Avatar} from 'react-native-elements';
 import DashboardItem from './DashboardItem';
@@ -9,6 +14,17 @@ import {styles} from './styles';
 
 const DashboardScreen = (props: defaultProps) => {
   const {navigation} = props;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" style={styles.loader} />;
+  }
 
   const HeaderView = () => (
     <Header
@@ -29,7 +45,7 @@ const DashboardScreen = (props: defaultProps) => {
             <Avatar
               rounded
               source={{uri: 'https://randomuser.me/api/portraits/men/41.jpg'}}
-              size="medium"
+              size="small"
             />
           </View>
         </View>
@@ -39,11 +55,11 @@ const DashboardScreen = (props: defaultProps) => {
   );
 
   return (
-    <Fragment>
-      <StatusBar />
+    <View>
+      <CustomStatusBar />
       <HeaderView />
       <DashboardItem />
-    </Fragment>
+    </View>
   );
 };
 

@@ -84,7 +84,7 @@ const chartConfigs = [
 
 export default class App extends React.Component {
   renderTabBar() {
-    return <StatusBar hidden />;
+    return <StatusBar />;
   }
   render() {
     const width = Dimensions.get('window').width;
