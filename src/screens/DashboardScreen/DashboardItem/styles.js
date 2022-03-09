@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '../../common/styles';
+import {colors} from '../../../common/styles';
 
 export const styles = StyleSheet.create({
   loader: {
@@ -49,5 +49,18 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: colors.orange,
     padding: 15,
+  },
+  MainContainer: {
+    backgroundColor: 'white',
+    paddingBottom: 140,
+  },
+
+  separatorStyle: {
+    height: 50,
+    width: 2,
+    backgroundColor: 'white',
+  },
+  bottomPlaceHolder: {
+    height: 110,
   },
 });

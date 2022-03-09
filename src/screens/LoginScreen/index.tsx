@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, ImageBackground, StatusBar} from 'react-native';
 import {useDispatch} from 'react-redux';
-//import {login} from '../../store/auth';
 import {
   Input,
   Button,
@@ -13,13 +12,11 @@ import {
 import {loginBackground} from '../../assets';
 import {useStyle} from './styles';
 import {isBlank} from '../../common/services/utils';
-//import {useLogin} from './login.hooks';
 import {postAuth} from '../../store/auth';
 
 const LoginScreen = (props: any) => {
   const dispatch = useDispatch();
   const {theme} = useTheme();
-  //const {doLogin} = useLogin();
   const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('cityslicka');
   const [enableLoginButton, setEnableLoginButton] = useState(false);
@@ -43,7 +40,6 @@ const LoginScreen = (props: any) => {
         email,
         password,
       };
-      ///doLogin(userInput);
       dispatch(postAuth(userInput));
     }
   };
