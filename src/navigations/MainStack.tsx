@@ -10,6 +10,8 @@ import VideoScreen from '../screens/VideosScreen';
 import NewsScreen from '../screens/NewsScreen';
 import NewDetailsScreen from '../screens/NewsScreen/NewsDetailScreen';
 
+import CharacterListScreen from '../screens/GameOfThrones';
+
 import {DefaultTheme} from '../common/styles';
 
 const Stack = createStackNavigator();
@@ -103,6 +105,15 @@ const VideoStackScreen = () => {
   );
 };
 
+const ThroneStack = createStackNavigator();
+const ThroneStackScreen = () => {
+  return (
+    <ThroneStack.Navigator screenOptions={stackOptionStyle}>
+      <ThroneStack.Screen name="Throne" component={CharacterListScreen} />
+    </ThroneStack.Navigator>
+  );
+};
+
 export {
   AuthStackScreen,
   MainStackNavigator,
@@ -110,4 +121,5 @@ export {
   NewsStackScreen,
   VideoStackScreen,
   TaskStackScreen,
+  ThroneStackScreen,
 };

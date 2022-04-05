@@ -4,6 +4,7 @@ import {
   MainStackNavigator,
   TaskStackScreen,
   //VideoStackScreen,
+  ThroneStackScreen,
   NewsStackScreen,
 } from './MainStack';
 import {useTheme, Icon} from 'react-native-elements';
@@ -33,7 +34,7 @@ const TabStack = () => {
     <Tab.Navigator
       screenOptions={screenOptionStyle}
       backBehavior="history"
-      initialRouteName={'Home'}
+      initialRouteName={'Tasks'}
       tabBarOptions={{
         showLabel: false,
         keyboardHidesTabBar: true,
@@ -41,6 +42,7 @@ const TabStack = () => {
         inactiveTintColor: colors?.warning,
         style: {backgroundColor: globalColors.background, minHeight: 55},
       }}>
+      {/**
       <Tab.Screen
         name="Home"
         component={MainStackNavigator}
@@ -55,6 +57,7 @@ const TabStack = () => {
           ),
         }}
       />
+       */}
       <Tab.Screen
         name="News"
         component={NewsStackScreen}
@@ -87,7 +90,7 @@ const TabStack = () => {
       />*/}
       <Tab.Screen
         name="Tasks"
-        component={TaskStackScreen}
+        component={ThroneStackScreen}
         options={{
           tabBarIcon: ({color, size}: tabBarProps) => (
             <Icon
