@@ -88,24 +88,24 @@ interface selectionItem {
   value: string;
 }
 
+interface filterItem {
+  key: string;
+  value: string;
+}
+
 const CharsFilter = (props: any) => {
-  const {refetch} = props;
+  const {filter, sourceData, setFilters} = props;
 
-  const firstFilterField = [
+  const filterKey = [
     {label: 'Title', value: 'title'},
-    {label: 'First Name', value: 'firstName'},
-  ];
-
-  const secondFilterFields = [
     {label: 'Family', value: 'family'},
     {label: 'Last Name', value: 'lastName'},
   ];
 
-  const [firstFilter, setFirstFilter] = useState<selectionItem>(
-    firstFilterField[0],
-  );
+  const [filterValue, setFilterValue] = useState<selectionItem[]>([]);
+  const [firstFilter, setFirstFilter] = useState<selectionItem>(filterKey[0]);
   const [secondFilter, setSecondFilter] = useState<selectionItem>(
-    secondFilterFields[1],
+    filterValue[0],
   );
 
   return (
@@ -117,41 +117,55 @@ const CharsFilter = (props: any) => {
         <Picker
           style={styles.pickerStyle}
           selectedValue={firstFilter}
-          onValueChange={(itemValue: selectionItem) =>
-            setFirstFilter(itemValue)
-          }>
-          {firstFilterField.map((filter: any) => {
+          onValueChange={(itemValue: selectionItem) => {
+            setFirstFilter(itemValue);
+            const newFilterValue = [
+              ...new Map(
+                sourceData.map(item => [item[itemValue], item[itemValue]]),
+              ).values(),
+            ].map(char => {
+              return {label: itemValue, value: char};
+            });
+            setFilterValue(newFilterValue);
+            setFilters({key: itemValue, value: newFilterValue[0].value});
+          }}>
+          {filterKey.map((filter: any, index: number) => {
             return (
               <Picker.Item
-                key={filter.label}
+                key={`${filter.label}${index}`}
                 label={filter.label}
                 value={filter.value}
               />
             );
           })}
         </Picker>
-        <Picker
-          style={[styles.pickerStyle, {marginLeft: 10}]}
-          selectedValue={secondFilter}
-          onValueChange={(itemValue: selectionItem) =>
-            setSecondFilter(itemValue)
-          }>
-          {secondFilterFields.map((filter: any) => {
-            return (
-              <Picker.Item
-                key={filter.label}
-                label={filter.label}
-                value={filter.value}
-              />
-            );
-          })}
-        </Picker>
+        {filterValue.length > 0 && (
+          <Picker
+            style={[styles.pickerStyle, {marginLeft: 10}]}
+            selectedValue={secondFilter}
+            onValueChange={(itemValue: selectionItem) => {
+              setSecondFilter(itemValue);
+              setFilters({key: firstFilter, value: itemValue});
+            }}>
+            {filterValue.map((filter: any, index: number) => {
+              if (filter.value && filter.label) {
+                return (
+                  <Picker.Item
+                    key={`${filter.label}${index}`}
+                    label={filter.value}
+                    value={filter.value}
+                  />
+                );
+              }
+            })}
+          </Picker>
+        )}
         <Button
           title={'Filter'}
           containerStyle={styles.buttonContainerStyle}
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitleStyle}
-          onPress={refetch}
+          onPress={filter}
         />
       </ScrollView>
     </View>
@@ -163,7 +177,6 @@ const CharsFooter = (props: any) => {
     numOfPages,
     itemsPerPage: pages,
     numOfRecords,
-    setCurrentPage,
     setCurrentPageItems,
     sourceData,
   } = props;
@@ -184,7 +197,7 @@ const CharsFooter = (props: any) => {
     };
   };
 
-  const buttonArr = [...Array(numOfPages).keys()].map(i => i +1);
+  const buttonArr = [...Array(numOfPages).keys()].map(i => i + 1);
 
   return (
     <View style={{flex: 0.1, backgroundColor: 'white'}}>
@@ -193,10 +206,8 @@ const CharsFooter = (props: any) => {
         selectedIndex={selectedIndex}
         onPress={value => {
           setSelectedIndex(value);
-          setCurrentPage(value);
           const paginate = pagination(numOfRecords, value + 1, pages);
-          console.log(paginate);
-          setCurrentPageItems(sourceData.slice(paginate.from, paginate.to + 1));
+          setCurrentPageItems(sourceData.slice(paginate.from - 1, paginate.to));
         }}
         containerStyle={{
           marginBottom: 20,
@@ -218,7 +229,7 @@ const CharactersList = (props: any) => {
   const itemsPerPage = 10;
   const [numOfPages, setNumOfPages] = useState<number>(0);
   const [currentPageItems, setCurrentPageItems] = useState<charData[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [filters, setFilters] = useState<filterItem[]>([]);
   const [numOfRecords, setNumOfRecords] = useState<number>(0);
   const characters = useSelector(selectAllCharacters);
 
@@ -238,14 +249,12 @@ const CharactersList = (props: any) => {
     }
   }, [loading]);
 
-  useEffect(() => {
-    console.log(currentPageItems);
-  }, [currentPageItems]);
-
-  const onFetchMore = () => {
-    //dispatch(fetchCharacters());
-    console.log(characters.length);
-    console.log(loading, characters.length, numOfPages);
+  const onFilter = () => {
+    const filteredChar = characters.filter(char => {
+      return char[filters.key] === filters.value;
+    });
+    setCurrentPageItems(filteredChar.slice(0, itemsPerPage));
+    console.log(filteredChar.length);
   };
 
   if (loading) {
@@ -272,7 +281,11 @@ const CharactersList = (props: any) => {
   return (
     <>
       <HeaderView />
-      <CharsFilter refetch={onFetchMore} />
+      <CharsFilter
+        setFilters={setFilters}
+        filter={onFilter}
+        sourceData={characters}
+      />
       <View style={styles.container}>
         <View style={{flex: 0.9}}>
           <FlatList
@@ -285,7 +298,6 @@ const CharactersList = (props: any) => {
         <CharsFooter
           numOfPages={numOfPages}
           itemsPerPage={itemsPerPage}
-          setCurrentPage={setCurrentPage}
           setCurrentPageItems={setCurrentPageItems}
           numOfRecords={numOfRecords}
           sourceData={characters}

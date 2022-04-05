@@ -20,7 +20,6 @@ export const fetchCharacters = createAsyncThunk(
   'thrones/fetchCharacters',
   async () => {
     const response = await fetch(
-      //'https://jsonplaceholder.typicode.com/todos/',
       'https://thronesapi.com/api/v2/Characters/',
     );
     return (await response.json()) as any[];
