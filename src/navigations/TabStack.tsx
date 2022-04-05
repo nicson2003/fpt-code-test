@@ -57,7 +57,6 @@ const TabStack = () => {
           ),
         }}
       />
-       */}
       <Tab.Screen
         name="News"
         component={NewsStackScreen}
@@ -89,7 +88,7 @@ const TabStack = () => {
         }}
       />*/}
       <Tab.Screen
-        name="Tasks"
+        name="Thrones"
         component={ThroneStackScreen}
         options={{
           tabBarIcon: ({color, size}: tabBarProps) => (

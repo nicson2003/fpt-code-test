@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
@@ -11,8 +12,12 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store';
-import {fetchCharacters, selectAllCharacters} from '../../store/chars';
-import {Header, Icon, Text, Button} from 'react-native-elements';
+import {
+  fetchCharacters,
+  selectAllCharacters,
+  charData,
+} from '../../store/chars';
+import {Header, Icon, Text, Button, ButtonGroup} from 'react-native-elements';
 import {colors} from '../../common/styles';
 import {Picker} from '@react-native-picker/picker';
 
@@ -104,49 +109,105 @@ const CharsFilter = (props: any) => {
   );
 
   return (
-    <ScrollView
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      style={styles.filterContainer}>
-      <Picker
-        style={styles.pickerStyle}
-        selectedValue={firstFilter}
-        onValueChange={(itemValue: selectionItem) => setFirstFilter(itemValue)}>
-        {firstFilterField.map((filter: any) => {
-          return (
-            <Picker.Item
-              key={filter.label}
-              label={filter.label}
-              value={filter.value}
-            />
-          );
-        })}
-      </Picker>
-      <Picker
-        style={[styles.pickerStyle, {marginLeft: 10}]}
-        selectedValue={secondFilter}
-        onValueChange={(itemValue: selectionItem) =>
-          setSecondFilter(itemValue)
-        }>
-        {secondFilterFields.map((filter: any) => {
-          return (
-            <Picker.Item
-              key={filter.label}
-              label={filter.label}
-              value={filter.value}
-            />
-          );
-        })}
-      </Picker>
+    <View style={{padding: 10}}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.filterContainer}>
+        <Picker
+          style={styles.pickerStyle}
+          selectedValue={firstFilter}
+          onValueChange={(itemValue: selectionItem) =>
+            setFirstFilter(itemValue)
+          }>
+          {firstFilterField.map((filter: any) => {
+            return (
+              <Picker.Item
+                key={filter.label}
+                label={filter.label}
+                value={filter.value}
+              />
+            );
+          })}
+        </Picker>
+        <Picker
+          style={[styles.pickerStyle, {marginLeft: 10}]}
+          selectedValue={secondFilter}
+          onValueChange={(itemValue: selectionItem) =>
+            setSecondFilter(itemValue)
+          }>
+          {secondFilterFields.map((filter: any) => {
+            return (
+              <Picker.Item
+                key={filter.label}
+                label={filter.label}
+                value={filter.value}
+              />
+            );
+          })}
+        </Picker>
+        <Button
+          title={'Filter'}
+          containerStyle={styles.buttonContainerStyle}
+          buttonStyle={styles.buttonStyle}
+          titleStyle={styles.buttonTitleStyle}
+          onPress={refetch}
+        />
+      </ScrollView>
+    </View>
+  );
+};
 
-      <Button
-        title={'Filter'}
-        containerStyle={styles.buttonContainerStyle}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitleStyle}
-        onPress={refetch}
+const CharsFooter = (props: any) => {
+  const {
+    numOfPages,
+    itemsPerPage: pages,
+    numOfRecords,
+    setCurrentPage,
+    setCurrentPageItems,
+    sourceData,
+  } = props;
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const pagination = (
+    length: number = numOfRecords,
+    currentPage: number,
+    itemsPerPage: number = pages,
+  ) => {
+    return {
+      total: length,
+      per_page: itemsPerPage,
+      current_page: currentPage,
+      last_page: Math.ceil(length / itemsPerPage),
+      from: (currentPage - 1) * itemsPerPage + 1,
+      to: currentPage * itemsPerPage,
+    };
+  };
+
+  const buttonArr = [...Array(numOfPages).keys()].map(i => i +1);
+
+  return (
+    <View style={{flex: 0.1, backgroundColor: 'white'}}>
+      <ButtonGroup
+        buttons={buttonArr}
+        selectedIndex={selectedIndex}
+        onPress={value => {
+          setSelectedIndex(value);
+          setCurrentPage(value);
+          const paginate = pagination(numOfRecords, value + 1, pages);
+          console.log(paginate);
+          setCurrentPageItems(sourceData.slice(paginate.from, paginate.to + 1));
+        }}
+        containerStyle={{
+          marginBottom: 20,
+          backgroundColor: 'gray',
+        }}
+        selectedButtonStyle={{
+          backgroundColor: 'green',
+        }}
+        buttonStyle={{color: 'white'}}
       />
-    </ScrollView>
+    </View>
   );
 };
 
@@ -154,15 +215,37 @@ const CharactersList = (props: any) => {
   const {navigation} = props;
   const dispatch = useDispatch();
   const {loading} = useSelector((state: RootState) => state.characters);
+  const itemsPerPage = 10;
+  const [numOfPages, setNumOfPages] = useState<number>(0);
+  const [currentPageItems, setCurrentPageItems] = useState<charData[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [numOfRecords, setNumOfRecords] = useState<number>(0);
   const characters = useSelector(selectAllCharacters);
 
   useEffect(() => {
     dispatch(fetchCharacters());
   }, []);
 
+  useEffect(() => {
+    if (!loading || characters.length) {
+      const remainder = characters.length % itemsPerPage;
+      const recPerPage = remainder
+        ? Math.round(characters.length / itemsPerPage) + 1
+        : Math.round(characters.length / itemsPerPage);
+      setNumOfPages(recPerPage);
+      setNumOfRecords(characters.length);
+      setCurrentPageItems(characters.slice(0, itemsPerPage));
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    console.log(currentPageItems);
+  }, [currentPageItems]);
+
   const onFetchMore = () => {
-    dispatch(fetchCharacters());
-    console.log(characters);
+    //dispatch(fetchCharacters());
+    console.log(characters.length);
+    console.log(loading, characters.length, numOfPages);
   };
 
   if (loading) {
@@ -189,14 +272,23 @@ const CharactersList = (props: any) => {
   return (
     <>
       <HeaderView />
-
+      <CharsFilter refetch={onFetchMore} />
       <View style={styles.container}>
-        <CharsFilter refetch={onFetchMore} />
-        <FlatList
-          data={characters}
-          ListHeaderComponent={() => <CharsHeader />}
-          renderItem={({item}) => <CharsItem item={item} />}
-          keyExtractor={(item, index) => `${item.id}${index}`}
+        <View style={{flex: 0.9}}>
+          <FlatList
+            data={currentPageItems}
+            ListHeaderComponent={() => <CharsHeader />}
+            renderItem={({item}) => <CharsItem item={item} />}
+            keyExtractor={(item, index) => `${item.id}${index}`}
+          />
+        </View>
+        <CharsFooter
+          numOfPages={numOfPages}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+          setCurrentPageItems={setCurrentPageItems}
+          numOfRecords={numOfRecords}
+          sourceData={characters}
         />
       </View>
     </>
@@ -211,6 +303,7 @@ const styles = StyleSheet.create({
     marginBottom: 'auto',
   },
   container: {
+    flex: 1,
     marginHorizontal: 10,
     backgroundColor: 'gray',
     height: 'auto',
@@ -234,7 +327,7 @@ const styles = StyleSheet.create({
   buttonStyle: {
     width: 80,
     backgroundColor: 'gray',
-    height: 50,
+    height: 60,
     borderRadius: 0,
   },
   buttonTitleStyle: {color: 'black'},
