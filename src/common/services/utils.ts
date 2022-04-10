@@ -39,7 +39,11 @@ export const isJson = (str: string) => {
 
 export const isBlank = (value: any) => {
   return (
-    value === undefined || value === null || value === '' || value === 'null'
+    value === undefined ||
+    value === null ||
+    value === '' ||
+    value === 'null' ||
+    value === []
   );
 };
 

@@ -109,7 +109,11 @@ const ThroneStack = createStackNavigator();
 const ThroneStackScreen = () => {
   return (
     <ThroneStack.Navigator screenOptions={stackOptionStyle}>
-      <ThroneStack.Screen name="Throne" component={CharacterListScreen} />
+      <ThroneStack.Screen
+        name="Throne"
+        options={{title: 'My home'}}
+        component={CharacterListScreen}
+      />
     </ThroneStack.Navigator>
   );
 };

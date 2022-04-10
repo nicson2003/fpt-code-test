@@ -4,6 +4,7 @@ import authReducer from './auth';
 import tasksReducer from './tasks';
 import newsReducer from './news';
 import characterReducer from './chars';
+import counterReducer from './counter';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     tasks: tasksReducer,
     news: newsReducer,
     characters: characterReducer,
+    counter: counterReducer,
   },
 });
 

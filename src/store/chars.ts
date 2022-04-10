@@ -19,9 +19,7 @@ export interface charData {
 export const fetchCharacters = createAsyncThunk(
   'thrones/fetchCharacters',
   async () => {
-    const response = await fetch(
-      'https://thronesapi.com/api/v2/Characters/',
-    );
+    const response = await fetch('https://thronesapi.com/api/v2/Characters/');
     return (await response.json()) as any[];
   },
 );

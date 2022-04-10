@@ -1,85 +1,85 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {Dimensions} from 'react-native';
 
-const formRadius = 35;
-const formHeight = 500;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-export const useStyle = props => {
-  const {colors} = props;
-
+export const useStyle = () => {
   return StyleSheet.create({
-    row: {
-      flex: 1,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
+    loader: {
+      marginTop: 'auto',
+      marginBottom: 'auto',
     },
     container: {
-      padding: 0,
-      margin: 0,
-      backgroundColor: 'gray',
-      height: '100%',
+      flex: 1,
+      marginHorizontal: 10,
+      //backgroundColor: 'gray',
+      height: windowHeight,
     },
-    imageBackground: {
-      width: '100%',
-      height: '100%',
+    heading: {
+      color: 'white',
+      fontSize: 22,
+      fontWeight: 'bold',
+      flex: 1,
+      height: 20
     },
-    loginForm: {
-      position: 'absolute',
-      bottom: 0,
-      backgroundColor: colors?.white,
-      borderTopRightRadius: formRadius,
-      borderTopLeftRadius: formRadius,
-      borderWidth: 1,
-      borderColor: colors?.white,
-      padding: 40,
-      paddingBottom: 20,
-      height: formHeight,
-      width: '100%',
+    headerRight: {
+      display: 'flex',
+      flexDirection: 'row',
+      marginTop: 5,
     },
-    titleText: {
-      textAlign: 'center',
-      padding: 5,
-      color: colors?.white,
-      marginBottom: 30,
-    },
-
+    leftContainer: {flex: 2, marginRight: 0},
+    rightContainer: {flex: 4, margin: 0},
     buttonContainerStyle: {
-      margin: 10,
+      width: 80,
+      marginHorizontal: 15,
     },
     buttonStyle: {
-      backgroundColor: colors?.success,
-      borderWidth: 2,
-      borderColor: 'rgba(111, 111, 111, 0.2)',
-      borderRadius: 30,
+      width: 80,
+      backgroundColor: 'gray',
+      height: 60,
+      borderRadius: 0,
+    },
+    buttonTitleStyle: {color: 'black'},
+    pickerStyle: {width: 180, backgroundColor: 'gray'},
+    filterContainer: {
+      overflow: 'hidden',
+      shadowColor: 'green',
+      shadowRadius: 10,
+      shadowOpacity: 1,
+    },
+    gridContainer: {
+      width: 220,
+    },
+    rowStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: 'white',
+      justifyContent: 'flex-start',
+      backgroundColor: 'gray',
+    },
+    cellStyle: {
+      flex: 1,
+      padding: 15,
+      width: 60,
+    },
+    image: {
+      width: 60,
       height: 60,
     },
-    buttonTitleStyle: {
-      fontWeight: 'bold',
+    idStyle: {
+      marginHorizontal: 10,
     },
-    buttonErrorStyle: {color: colors?.error},
-    registerLink: {
-      color: colors.warning,
-      fontWeight: 'bold',
+    headerTextStyle: {fontSize: 14, fontWeight: 'bold'},
+
+    footerContainerStyle: {
+      marginBottom: 20,
+      backgroundColor: 'gray',
     },
-    registerText: {
-      textAlign: 'center',
-      fontSize: 14,
-    },
-    header: {
-      flexDirection: 'row',
-      borderWidth: 1,
-      borderColor: 'rgba(111, 111, 111, 0.2)',
-    },
-    item: {
-      flexDirection: 'row',
-      height: 40,
-      marginBottom: 5,
-    },
-    text: {textAlign: 'center', fontSize: 14, color: colors?.warning},
-    imageStyle: {
-      height: 50,
-      width: 50,
-      resizeMode: 'contain',
+    footerView: {flex: 0.1, backgroundColor: 'white'},
+    footerSelectedButtonStyle: {
+      backgroundColor: 'green',
     },
   });
 };
