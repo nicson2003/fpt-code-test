@@ -11,8 +11,15 @@ import NewsScreen from '../screens/NewsScreen';
 import NewDetailsScreen from '../screens/NewsScreen/NewsDetailScreen';
 
 import CharacterListScreen from '../screens/GameOfThrones';
+import SkulpRegistrationScreen from '../screens/SkulpRegistrationScreen';
+import AboutYouScreen from '../screens/SkulpRegistrationScreen/AboutYouScreen';
+import BusinessSettingsScreen from '../screens/SkulpRegistrationScreen/BusinessSettingsScreen';
 
 import {DefaultTheme} from '../common/styles';
+import CalendarIntegrationScreen from '../screens/SkulpRegistrationScreen/CalendarIntegrationScreen';
+import MarketingScreen from '../screens/SkulpRegistrationScreen/MarketingScreen';
+import YourPaymentScreen from '../screens/SkulpRegistrationScreen/YourPaymentScreen';
+import EditYourSpaceScreen from '../screens/SkulpRegistrationScreen/EditYourSpaceScreen';
 
 const Stack = createStackNavigator();
 
@@ -118,6 +125,48 @@ const ThroneStackScreen = () => {
   );
 };
 
+const SkulpStack = createStackNavigator();
+const SkulpStackScreen = () => {
+  return (
+    <SkulpStack.Navigator screenOptions={stackOptionStyle}>
+      <SkulpStack.Screen
+        name="contact_information"
+        options={{title: 'Contact Information'}}
+        component={SkulpRegistrationScreen}
+      />
+      <SkulpStack.Screen
+        name="about_you"
+        options={{title: 'About You'}}
+        component={AboutYouScreen}
+      />
+      <SkulpStack.Screen
+        name="business_settings"
+        options={{title: 'Business Settings'}}
+        component={BusinessSettingsScreen}
+      />
+      <SkulpStack.Screen
+        name="edit_your_space"
+        options={{title: 'Edit Your Space'}}
+        component={EditYourSpaceScreen}
+      />
+      <SkulpStack.Screen
+        name="your_payment"
+        options={{title: 'Your Payment'}}
+        component={YourPaymentScreen}
+      />
+      <SkulpStack.Screen
+        name="marketing"
+        options={{title: 'Marketing'}}
+        component={MarketingScreen}
+      />
+      <SkulpStack.Screen
+        name="calendar_integration"
+        options={{title: 'Calendar Integration'}}
+        component={CalendarIntegrationScreen}
+      />
+    </SkulpStack.Navigator>
+  );
+};
 export {
   AuthStackScreen,
   MainStackNavigator,
@@ -126,4 +175,5 @@ export {
   VideoStackScreen,
   TaskStackScreen,
   ThroneStackScreen,
+  SkulpStackScreen,
 };

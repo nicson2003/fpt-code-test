@@ -69,6 +69,7 @@ const CharactersList = (props: any) => {
     if (!isBlank(filteredChar)) {
       setCurrentPageItems(filteredChar.slice(0, itemsPerPage));
     }
+    
     console.log(filters);
     console.log(filteredChar.length)
   };

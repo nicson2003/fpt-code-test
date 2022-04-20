@@ -1,11 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
-  MainStackNavigator,
-  TaskStackScreen,
+  //MainStackNavigator,
+  //TaskStackScreen,
   //VideoStackScreen,
-  ThroneStackScreen,
-  NewsStackScreen,
+  //ThroneStackScreen,
+  //NewsStackScreen,
+  SkulpStackScreen,
 } from './MainStack';
 import {useTheme, Icon} from 'react-native-elements';
 import {colors as globalColors} from '../common/styles';
@@ -34,12 +35,13 @@ const TabStack = () => {
     <Tab.Navigator
       screenOptions={screenOptionStyle}
       backBehavior="history"
-      initialRouteName={'Tasks'}
+      initialRouteName={'register'}
       tabBarOptions={{
         showLabel: false,
         keyboardHidesTabBar: true,
-        activeTintColor: colors?.white,
-        inactiveTintColor: colors?.warning,
+        activeTintColor: globalColors.goldColor,
+        inactiveTintColor: globalColors?.text,
+        activeBackgroundColor: globalColors.background,
         style: {backgroundColor: globalColors.background, minHeight: 55},
       }}>
       {/**
@@ -86,10 +88,25 @@ const TabStack = () => {
             />
           ),
         }}
-      />*/}
-      <Tab.Screen
+      />
+       <Tab.Screen
         name="Thrones"
         component={ThroneStackScreen}
+        options={{
+          tabBarIcon: ({color, size}: tabBarProps) => (
+            <Icon
+              name="add-task"
+              size={size}
+              color={color}
+              tvParallaxProperties={undefined}
+            />
+          ),
+        }}
+      />
+      */}
+      <Tab.Screen
+        name="register"
+        component={SkulpStackScreen}
         options={{
           tabBarIcon: ({color, size}: tabBarProps) => (
             <Icon

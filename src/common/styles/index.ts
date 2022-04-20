@@ -5,11 +5,12 @@ import {
 } from '@react-navigation/native';
 
 export const colors = {
-  background: '#3D851A',
+  background: '#000000',
+  formBackground: '#404040',
   backgroundLight: '#FBFEFE',
   orange: '#FF4500',
   text: '#fff',
-  goldColor: '#fbb825',
+  goldColor: '#fdfc00',
 };
 //#F98E05, #CED2D1, #679D3D, #FBFEFE, #192328, #166842
 
