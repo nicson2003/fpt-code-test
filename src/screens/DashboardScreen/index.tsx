@@ -1,10 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  ActivityIndicator,
-  StatusBar,
-} from 'react-native';
+import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import CustomStatusBar from '../../common/components/StatusBar';
 import {defaultProps} from '../../common/types';
 import {Header, Icon, Avatar} from 'react-native-elements';
