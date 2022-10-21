@@ -1,13 +1,5 @@
-import React, {useState, useEffect, useContext, useCallback} from 'react';
-import {
-  View,
-  SafeAreaView,
-  Dimensions,
-  FlatList,
-  Text,
-  ScrollView,
-  Image,
-} from 'react-native';
+import React from 'react';
+import {View, SafeAreaView, FlatList, Image} from 'react-native';
 import {styles} from './styles';
 
 const data = [
@@ -20,7 +12,7 @@ const data = [
   {id: '7', name: 'name7'},
 ];
 
-const TopStoryItem = (props: any) => {
+const TopStoryItem = () => {
   const urlToImage =
     'https://newsinfo.inquirer.net/files/2021/10/News193852-620x568.jpg';
   return (

@@ -1,8 +1,7 @@
-import React, {useState, useEffect, useContext, useCallback} from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
-import styles from '../styles';
 
-const NewsDetailsScreen = props => {
+const NewsDetailsScreen = () => {
   return (
     <View>
       <Text> news detail screen</Text>

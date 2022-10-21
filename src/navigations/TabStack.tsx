@@ -1,15 +1,15 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
-  //MainStackNavigator,
+  MainStackNavigator,
+  ThroneStackScreen,
   //TaskStackScreen,
   //VideoStackScreen,
-  //ThroneStackScreen,
   //NewsStackScreen,
-  SkulpStackScreen,
+  //SkulpStackScreen,
 } from './MainStack';
-import {useTheme, Icon} from 'react-native-elements';
 import {colors as globalColors} from '../common/styles';
+import {Icon} from 'react-native-elements';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,8 +29,6 @@ type tabBarProps = {
 };
 
 const TabStack = () => {
-  const {theme} = useTheme();
-  const {colors} = theme;
   return (
     <Tab.Navigator
       screenOptions={screenOptionStyle}
@@ -44,7 +42,6 @@ const TabStack = () => {
         activeBackgroundColor: globalColors.background,
         style: {backgroundColor: globalColors.background, minHeight: 55},
       }}>
-      {/**
       <Tab.Screen
         name="Home"
         component={MainStackNavigator}
@@ -60,6 +57,22 @@ const TabStack = () => {
         }}
       />
       <Tab.Screen
+        name="Thrones"
+        component={ThroneStackScreen}
+        options={{
+          tabBarIcon: ({color, size}: tabBarProps) => (
+            <Icon
+              name="add-task"
+              size={size}
+              color={color}
+              tvParallaxProperties={undefined}
+            />
+          ),
+        }}
+      />
+
+      {/*      ongoing update
+      <Tab.Screen
         name="News"
         component={NewsStackScreen}
         options={{
@@ -73,7 +86,6 @@ const TabStack = () => {
           ),
         }}
       />
-      {/*      ongoing update
 
       <Tab.Screen
         name="Videos"
@@ -89,21 +101,6 @@ const TabStack = () => {
           ),
         }}
       />
-       <Tab.Screen
-        name="Thrones"
-        component={ThroneStackScreen}
-        options={{
-          tabBarIcon: ({color, size}: tabBarProps) => (
-            <Icon
-              name="add-task"
-              size={size}
-              color={color}
-              tvParallaxProperties={undefined}
-            />
-          ),
-        }}
-      />
-      */}
       <Tab.Screen
         name="register"
         component={SkulpStackScreen}
@@ -118,6 +115,8 @@ const TabStack = () => {
           ),
         }}
       />
+
+      */}
     </Tab.Navigator>
   );
 };

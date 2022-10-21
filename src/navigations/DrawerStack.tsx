@@ -6,7 +6,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {useDispatch} from 'react-redux';
-//import {ProfileScreen} from './MainStack';
+import {ProfileScreen} from './MainStack';
 import TabStack from './TabStack';
 import {logout} from '../store/auth';
 
